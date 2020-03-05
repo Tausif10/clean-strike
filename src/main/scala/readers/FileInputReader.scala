@@ -4,8 +4,8 @@ import scala.util.Try
 
 class FileInputReader extends InputReader {
 
-  override def read(): Try[List[String]] =
+  override def read(path: String): Try[List[String]] =
     Try(
-      scala.io.Source.fromFile("src/main/scala/resource/InputFile").getLines().toList
+      scala.io.Source.fromFile(path).getLines().toList
     )
 }

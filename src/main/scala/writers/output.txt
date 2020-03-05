@@ -1,5 +1,5 @@
 players:
-	Player(Gunjan,5,1,0,Win)
-	Player(Tausif,1,2,1,Play)
-carrom board: CarromBoard(0,0,Striker())
-Game Status: Gunjan won
+	Player(John,0,0,0,Play)
+	Player(Smith,0,0,0,Wait)
+carrom board: CarromBoard(9,1,Striker())
+Game Status: Draw

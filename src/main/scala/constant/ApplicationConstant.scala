@@ -7,22 +7,23 @@ object ApplicationConstant {
 
   val PLAYER_NAME_FILE = "src/main/scala/resource/PlayersFile"
   val OUTPUT_FILE = "src/main/scala/writers/output.txt"
+  val INPUT_FILE = "src/main/scala/resource/InputFile"
 
-  val STRIKE = "Strike"
-  val MULTI_STRIKE = "Multi strike"
-  val RED_STRIKE = "Red strike"
-  val STRIKER_STRIKE = "Striker strike"
-  val DEFUNCT_COIN = "Defunct coin"
+  val STRIKE = "strike"
+  val MULTI_STRIKE = "multi strike"
+  val RED_STRIKE = "red strike"
+  val STRIKER_STRIKE = "striker strike"
+  val DEFUNCT_COIN = "defunct coin"
 
 
   def strikeOptions() = {
     s"""****** Options ******
-       |$STRIKE
-       |$MULTI_STRIKE
-       |$RED_STRIKE
-       |$STRIKER_STRIKE
-       |$DEFUNCT_COIN
-       |Enter your choices as new line in file:[src/main/scala/resource/InputFile]
+       |${STRIKE.capitalize}
+       |${MULTI_STRIKE.capitalize}
+       |${RED_STRIKE.capitalize}
+       |${STRIKER_STRIKE.capitalize}
+       |${DEFUNCT_COIN.capitalize}
+       |Enter your choices as new line in file:[${INPUT_FILE}]
        |""".stripMargin
   }
 }

@@ -12,7 +12,7 @@ import scala.util.{Failure, Success}
 class Carrom(reader: InputReader, gameStatusFetcher: GameStatusFetcher, outputWriters: OutputWriters) {
 
   def play(players: List[Player]) {
-    val playersInputs = readInputOption()
+    val playersInputs = readInputOption(ApplicationConstant.OUTPUT_FILE)
     val board = CarromBoard()
     val gameStatus = if (playersInputs.nonEmpty) {
       val (updatedPlayer, carromBoard) = performActions(playersInputs, players, board)
@@ -37,7 +37,7 @@ class Carrom(reader: InputReader, gameStatusFetcher: GameStatusFetcher, outputWr
     val playerOnTurn = findPlayerOnTurn(players)
     val playersExcludingOnTurnPlayer = players.filterNot(_.name == playerOnTurn.name)
 
-    choice.trim match {
+    choice.trim.toLowerCase match {
       case STRIKE => ((playerOnTurn.addPoint.removeSuccessiveFailTurn :: playersExcludingOnTurnPlayer).map(_.updateStatus),
         carromBoard.pocketBlackCoin())
       case MULTI_STRIKE => ((playerOnTurn.addPoint.addPoint.removeSuccessiveFailTurn ::
@@ -57,8 +57,8 @@ class Carrom(reader: InputReader, gameStatusFetcher: GameStatusFetcher, outputWr
     if (playerOnTurn.isEmpty) playerWaitingForTurn.head.updateStatus else playerOnTurn.head
   }
 
-  private def readInputOption(): List[String] = {
-    reader.read() match {
+  private def readInputOption(path: String): List[String] = {
+    reader.read(path) match {
       case Success(inputOptions) => inputOptions
       case Failure(exception) => List.empty[String]
     }

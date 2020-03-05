@@ -14,10 +14,10 @@ class CarromSpec extends Specification with Mockito {
 
   "Carrom" should {
 
-    "game is started by player1 and add one point if input is 'Strike'" in new Fixture {
+    "game is started by player1 and add one point if input is 'Strike' with case insensitive'" in new Fixture {
       val updatedBoard: CarromBoard = carromBoard.copy(blackCoin = 8)
       val updatedPlayers = List(Player("Player1", 1, 0, 0, PlayingState.Wait), Player("Player2", 0, 0, 0, PlayingState.Play))
-      mockReader.read() returns Success(List("Strike"))
+      mockReader.read(any()) returns Success(List("strike"))
       mockGameStatusFetcher.isGameOver(carromBoard) returns false
       mockGameStatusFetcher.isGameOver(updatedBoard.copy(blackCoin = 8)) returns true
       mockGameStatusFetcher.getStatus(updatedPlayers, updatedBoard) returns GameStatus(updatedPlayers, "Draw", carromBoard)
@@ -28,7 +28,7 @@ class CarromSpec extends Specification with Mockito {
     "Player win two point if input is 'Multi strike'" in new Fixture {
       val updatedBoard: CarromBoard = carromBoard.copy(blackCoin = 7)
       val updatedPlayers = List(Player("Player1", 2, 0, 0, PlayingState.Wait), Player("Player2", 0, 0, 0, PlayingState.Play))
-      mockReader.read() returns Success(List("Multi strike"))
+      mockReader.read(any()) returns Success(List("Multi strike"))
       mockGameStatusFetcher.isGameOver(carromBoard) returns false
       mockGameStatusFetcher.isGameOver(updatedBoard.copy(blackCoin = 7)) returns true
       mockGameStatusFetcher.getStatus(updatedPlayers, updatedBoard) returns GameStatus(updatedPlayers, "Draw", carromBoard)
@@ -39,7 +39,7 @@ class CarromSpec extends Specification with Mockito {
     "Player win three point if input is 'Red strike'" in new Fixture {
       val updatedBoard: CarromBoard = carromBoard.copy(readCoin = 0)
       val updatedPlayers = List(Player("Player1", 3, 0, 0, PlayingState.Wait), Player("Player2", 0, 0, 0, PlayingState.Play))
-      mockReader.read() returns Success(List("Red strike"))
+      mockReader.read(any()) returns Success(List("Red strike"))
       mockGameStatusFetcher.isGameOver(carromBoard) returns false
       mockGameStatusFetcher.isGameOver(updatedBoard) returns true
       mockGameStatusFetcher.getStatus(updatedPlayers, updatedBoard) returns GameStatus(updatedPlayers, "Draw", carromBoard)
@@ -50,7 +50,7 @@ class CarromSpec extends Specification with Mockito {
     "Player lose 1 point and add foul and successive fail count if input is 'Striker strike'" in new Fixture {
       val updatedBoard: CarromBoard = carromBoard.copy(blackCoin = 8)
       val updatedPlayers = List(Player("Player2", 1, 0, 0, PlayingState.Wait), Player("Player1", -1, 1, 1, PlayingState.Play))
-      mockReader.read() returns Success(List("Striker strike", "Strike"))
+      mockReader.read(any()) returns Success(List("Striker strike", "Strike"))
       mockGameStatusFetcher.isGameOver(carromBoard) returns false
       mockGameStatusFetcher.isGameOver(updatedBoard) returns true
       mockGameStatusFetcher.getStatus(updatedPlayers, updatedBoard) returns GameStatus(updatedPlayers, "Draw", carromBoard)
@@ -61,7 +61,7 @@ class CarromSpec extends Specification with Mockito {
     "Player lose 2 point and add a foul and a successive fail count if input is 'Striker strike'" in new Fixture {
       val updatedBoard: CarromBoard = carromBoard.copy(blackCoin = 8)
       val updatedPlayers = List(Player("Player2", 1, 0, 0, PlayingState.Wait), Player("Player1", -2, 1, 1, PlayingState.Play))
-      mockReader.read() returns Success(List("Defunct coin", "Strike"))
+      mockReader.read(any()) returns Success(List("Defunct coin", "Strike"))
       mockGameStatusFetcher.isGameOver(carromBoard) returns false
       mockGameStatusFetcher.isGameOver(updatedBoard) returns true
       mockGameStatusFetcher.getStatus(updatedPlayers, updatedBoard) returns GameStatus(updatedPlayers, "Draw", carromBoard)
@@ -72,7 +72,7 @@ class CarromSpec extends Specification with Mockito {
     "Player lose 1 extra point for on 3 successive fail count or 3 foul and clear his successive fail count" in new Fixture {
       val updatedBoard: CarromBoard = carromBoard.copy(blackCoin = 6)
       val updatedPlayers = List(Player("Player2", 3, 0, 0, PlayingState.Wait), Player("Player1", -5, 0, 0, PlayingState.Play))
-      mockReader.read() returns Success(List("Striker strike", "Strike", "Striker strike", "Strike", "Striker strike", "Strike"))
+      mockReader.read(any()) returns Success(List("Striker strike", "Strike", "Striker strike", "Strike", "Striker strike", "Strike"))
       mockGameStatusFetcher.isGameOver(carromBoard) returns false
       mockGameStatusFetcher.isGameOver(updatedBoard) returns true
       mockGameStatusFetcher.getStatus(updatedPlayers, updatedBoard) returns GameStatus(updatedPlayers, "Draw", carromBoard)
@@ -83,7 +83,7 @@ class CarromSpec extends Specification with Mockito {
     "update player and carrom updatedBoard and write output to file" in new Fixture {
       val updatedPlayers = List(Player("Player2", 1, 0, 0, PlayingState.Wait), Player("Player1", 1, 0, 0, PlayingState.Play))
       val gameStatus = GameStatus(updatedPlayers, "Draw", carromBoard)
-      mockReader.read() returns Success(List("Strike", "Strike"))
+      mockReader.read(any()) returns Success(List("Strike", "Strike"))
       mockGameStatusFetcher.isGameOver(carromBoard) returns false
       mockGameStatusFetcher.isGameOver(carromBoard.copy(blackCoin = 8)) returns false
       mockGameStatusFetcher.isGameOver(carromBoard.copy(blackCoin = 7)) returns true
@@ -96,12 +96,12 @@ class CarromSpec extends Specification with Mockito {
     }
 
     "when there is no input provided then write available options to output file" in new Fixture {
-      mockReader.read() returns Success(List.empty)
+      mockReader.read(any()) returns Success(List.empty)
       game.play(players)
       there was one(mockOutputWriters).write(gameStatusForEmptyInput.copy())
-      there was one(mockReader).read()
+      there was one(mockReader).read(any())
       there was no(mockGameStatusFetcher).isGameOver(any())
-        }
+    }
   }
 
   trait Fixture extends Scope {

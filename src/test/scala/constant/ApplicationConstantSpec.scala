@@ -36,6 +36,10 @@ class ApplicationConstantSpec extends Specification {
       "Player name file path" in {
         ApplicationConstant.PLAYER_NAME_FILE mustEqual "src/main/scala/resource/PlayersFile"
       }
+
+      "Input for carrom file path" in {
+        ApplicationConstant.INPUT_FILE mustEqual "src/main/scala/resource/InputFile"
+      }
     }
   }
 }
