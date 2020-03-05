@@ -5,6 +5,7 @@ object ApplicationConstant {
   val MAX_SUCCESSIVE_FAIL_ALLOW = 3
   val MAX_FOUL_COUNTS_ALLOW = 3
 
+  val PLAYER_NAME_FILE = "src/main/scala/resource/PlayersFile"
 
   val STRIKE = "Strike"
   val MULTI_STRIKE = "Multi strike"

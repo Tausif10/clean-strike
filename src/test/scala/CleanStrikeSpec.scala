@@ -8,11 +8,7 @@
 //  "Game" should {
 //
 //    "start the game" in {
-//      val mockGame = mock[Carrom]
-//      val mockPlayers = mock[List[Player]]
-//      val cleanStrike = new CleanStrike(mockGame, mockPlayers)
-//      mockGame.start(mockPlayers) returns ""
-//      cleanStrike.play() mustEqual ""
+//      val cleanStrike = new CleanStrike()
 //    }
 //  }
 //}

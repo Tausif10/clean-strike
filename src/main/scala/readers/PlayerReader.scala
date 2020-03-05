@@ -3,5 +3,5 @@ package readers
 import models.Player
 
 trait PlayerReader {
-  def read(): List[Player]
+  def read(path: String): List[Player]
 }
