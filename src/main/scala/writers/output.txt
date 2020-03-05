@@ -1,0 +1,4 @@
+players: Player(Tausif,5,1,0,Win)
+Player(Shabana,1,2,1,Play)
+carrom board: CarromBoard(0,0,Striker())
+Game Status: Tausif won
