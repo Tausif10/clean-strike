@@ -92,7 +92,7 @@ class CarromSpec extends Specification with Mockito {
       game.play(players)
       there was three(mockGameStatusFetcher).isGameOver(any())
       there was one(mockGameStatusFetcher).getStatus(any(), any())
-      there was one(mockOutputWriters).write(any())
+      there was one(mockOutputWriters).write(any(), any())
     }
 
     "when there is no input provided then write available options to output file" in new Fixture {

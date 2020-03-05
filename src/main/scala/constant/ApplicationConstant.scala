@@ -6,6 +6,7 @@ object ApplicationConstant {
   val MAX_FOUL_COUNTS_ALLOW = 3
 
   val PLAYER_NAME_FILE = "src/main/scala/resource/PlayersFile"
+  val OUTPUT_FILE = "src/main/scala/writers/output.txt"
 
   val STRIKE = "Strike"
   val MULTI_STRIKE = "Multi strike"
