@@ -10,7 +10,7 @@ case class CarromBoard(blackCoin: Int = 9, readCoin: Int = 1, striker: Striker =
     if (readCoin == 1) this.copy(readCoin = readCoin - 1) else this
   }
 
-  def takeCoinOut = this.pocketReadCoin()
+  def takeCoinOut: CarromBoard = this.pocketReadCoin()
 
-  def numOfCoinOnBoard = blackCoin +readCoin
+  def numOfCoinOnBoard: Int = blackCoin +readCoin
 }

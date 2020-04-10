@@ -4,18 +4,19 @@ import constant.ApplicationConstant
 import constant.ApplicationConstant._
 import models._
 import readers.InputReader
+import rules.ActionRuleHolder._
 import writers.OutputWriters
 
 import scala.annotation.tailrec
-import scala.util.{Failure, Success}
+import scala.util.Try
 
-class Carrom(reader: InputReader, gameStatusFetcher: GameStatusFetcher, outputWriters: OutputWriters) {
+class Carrom(reader: InputReader[Try[List[String]]], gameStatusFetcher: GameStatusFetcher, outputWriters: OutputWriters) {
 
   def play(players: List[Player]) {
-    val playersInputs = readInputOption(ApplicationConstant.INPUT_FILE)
+    val actionInputs = readInputOption(ApplicationConstant.INPUT_FILE)
     val board = CarromBoard()
-    val gameStatus = if (playersInputs.nonEmpty) {
-      val (updatedPlayer, carromBoard) = performActions(playersInputs, players, board)
+    val gameStatus = if (actionInputs.nonEmpty) {
+      val (updatedPlayer, carromBoard) = performActions(actionInputs, players, board)
       gameStatusFetcher.getStatus(updatedPlayer, carromBoard)
     } else {
       GameStatus(players, ApplicationConstant.strikeOptions(), board)
@@ -29,7 +30,8 @@ class Carrom(reader: InputReader, gameStatusFetcher: GameStatusFetcher, outputWr
       (players, carromBoard)
     } else {
       val (updatedPlayerOnTurn, updatedCarromBoard) = actions(inputs.head, findPlayerOnTurn(players), carromBoard)
-      performActions(inputs.tail, updatesPlayers(players, updatedPlayerOnTurn), updatedCarromBoard)
+      val updatedPlayers = updatesPlayers(players, updatedPlayerOnTurn)
+      performActions(inputs.tail, updatedPlayers, updatedCarromBoard)
     }
   }
 
@@ -40,11 +42,11 @@ class Carrom(reader: InputReader, gameStatusFetcher: GameStatusFetcher, outputWr
 
   private def actions(choice: String, playerOnTurn: Player, carromBoard: CarromBoard): (Player, CarromBoard) = {
     choice.trim.toLowerCase match {
-      case STRIKE => (playerOnTurn.addPoint.removeSuccessiveFailTurn, carromBoard.pocketBlackCoin())
-      case MULTI_STRIKE => (playerOnTurn.addPoint.addPoint.removeSuccessiveFailTurn, carromBoard.pocketBlackCoin().pocketBlackCoin())
-      case RED_STRIKE => (playerOnTurn.addPoint.addPoint.addPoint.removeSuccessiveFailTurn, carromBoard.pocketReadCoin())
-      case STRIKER_STRIKE => (playerOnTurn.addFoul.losePoint.addSuccessiveFailTurnCount, carromBoard)
-      case DEFUNCT_COIN => (playerOnTurn.addFoul.losePoint.losePoint.addSuccessiveFailTurnCount, carromBoard)
+      case STRIKE => rulesForStrike(playerOnTurn, carromBoard)
+      case MULTI_STRIKE => rulesForMutiStrike(playerOnTurn, carromBoard)
+      case RED_STRIKE => rulesForRedStrike(playerOnTurn, carromBoard)
+      case STRIKER_STRIKE => rulesForStrikersStrike(playerOnTurn, carromBoard)
+      case DEFUNCT_COIN => rulesForDefunctCoin(playerOnTurn, carromBoard)
       case _ => (playerOnTurn, carromBoard)
     }
   }
@@ -55,10 +57,7 @@ class Carrom(reader: InputReader, gameStatusFetcher: GameStatusFetcher, outputWr
   }
 
   private def readInputOption(path: String): List[String] = {
-    reader.read(path) match {
-      case Success(inputOptions) => inputOptions
-      case Failure(exception) => List.empty[String]
-    }
+    reader.read(path).getOrElse(List.empty[String])
   }
 
 }

@@ -1,10 +1,11 @@
 
 
 import constant.ApplicationConstant
-import readers.PlayerReader
+import models.Player
+import readers.InputReader
 import services.Carrom
 
-class CleanStrike(playerReader: PlayerReader, carrom: Carrom) {
+class CleanStrike(playerReader: InputReader[List[Player]], carrom: Carrom) {
 
   def start(): Unit = {
     val players = playerReader.read(ApplicationConstant.PLAYER_NAME_FILE)
