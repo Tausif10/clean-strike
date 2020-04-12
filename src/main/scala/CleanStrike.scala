@@ -9,7 +9,7 @@ import scala.util.Try
 
 class CleanStrike(playerReader: InputReader[List[Player]], carrom: Carrom) {
 
-  def start(): Unit = {
+  def start(): Try[Unit] = {
     readPlayers.map(carrom.play)
   }
 

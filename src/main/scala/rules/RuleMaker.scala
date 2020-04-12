@@ -2,7 +2,7 @@ package rules
 
 import models.{CarromBoard, Player}
 
-trait CarromRuleHandler[T] {
+trait RuleMaker[T] {
   def rulesForStrike(player: Player, carromBoard: CarromBoard): T
 
   def rulesForMutiStrike(player: Player, carromBoard: CarromBoard): T

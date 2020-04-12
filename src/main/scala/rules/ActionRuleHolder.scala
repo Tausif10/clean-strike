@@ -2,7 +2,7 @@ package rules
 
 import models.{CarromBoard, Player}
 
-object ActionRuleHolder extends CarromRuleHandler[(Player, CarromBoard)] {
+object ActionRuleHolder extends RuleMaker[(Player, CarromBoard)] {
 
   def rulesForStrike(player: Player, carromBoard: CarromBoard): (Player, CarromBoard) = {
     (player.addPoint.removeSuccessiveFailTurn, carromBoard.pocketBlackCoin())

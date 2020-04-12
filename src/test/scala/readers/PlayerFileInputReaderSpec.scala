@@ -5,6 +5,8 @@ import org.specs2.mock.Mockito
 import org.specs2.mutable.Specification
 import transformers.PlayerBuilder
 
+import scala.util.Success
+
 class PlayerFileInputReaderSpec extends Specification with Mockito {
 
   "Player file reader" should {
@@ -14,15 +16,15 @@ class PlayerFileInputReaderSpec extends Specification with Mockito {
       mockPlayerBuilder.build(List("Player1", "Player2")) returns expectedPlayers
       val playerFileInputReader = new PlayerFileInputReader(mockPlayerBuilder)
       val players = playerFileInputReader.read("src/test/scala/resources/testPlayerFile")
-      players mustEqual expectedPlayers
+      players mustEqual Success(expectedPlayers)
       there was one(mockPlayerBuilder).build(List("Player1", "Player2"))
     }
 
-    "return empty list of players when file does not exists or file is empty" in {
+    "return failure with exception when file does not exists or file is empty" in {
       val mockPlayerBuilder = mock[PlayerBuilder]
       val playerFileInputReader = new PlayerFileInputReader(mockPlayerBuilder)
       val players = playerFileInputReader.read("invalid")
-      players mustEqual List.empty[Player]
+      players must beFailedTry
       there was no(mockPlayerBuilder).build(any())
     }
   }
