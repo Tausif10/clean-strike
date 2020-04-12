@@ -1,5 +1,6 @@
 # Default ignored files
 /.idea/workspace.xml
+.idea/modules
 project/project/target
 project/target
 target
