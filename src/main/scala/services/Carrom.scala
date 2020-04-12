@@ -8,9 +8,8 @@ import rules.ActionRuleHolder._
 import writers.OutputWriters
 
 import scala.annotation.tailrec
-import scala.util.Try
 
-class Carrom(reader: InputReader[Try[List[String]]], gameStatusFetcher: GameStatusFetcher, outputWriters: OutputWriters) {
+class Carrom(reader: InputReader[List[String]], gameStatusFetcher: GameStatusFetcher, outputWriters: OutputWriters) {
 
   def play(players: List[Player]) {
     val actionInputs = readInputOption(ApplicationConstant.INPUT_FILE)

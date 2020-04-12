@@ -107,7 +107,7 @@ class CarromSpec extends Specification with Mockito {
   trait Fixture extends Scope {
     val mockOutputWriters = mock[OutputWriters]
     val mockGameStatusFetcher = mock[GameStatusFetcher]
-    val mockReader = mock[InputReader[Try[List[String]]]]
+    val mockReader = mock[InputReader[List[String]]]
     val player1 = Player("Player1")
     val player2 = Player("Player2")
     val players = List(player1, player2)
