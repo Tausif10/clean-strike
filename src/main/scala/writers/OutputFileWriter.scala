@@ -4,8 +4,10 @@ import java.io.{File, PrintWriter}
 
 import models.GameStatus
 
-class OutputFileWriter extends OutputWriters {
-  override def write(gameStatus: GameStatus, pathToWrite: String): Unit = {
+import scala.util.Try
+
+class OutputFileWriter(pathToWrite: String) extends OutputWriter {
+  override def write(gameStatus: GameStatus) = {
     val output =
       s"""players:\n\t${gameStatus.players.mkString("\n\t")}
          |carrom board: ${gameStatus.carromBoard}

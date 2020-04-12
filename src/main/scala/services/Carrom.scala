@@ -1,18 +1,15 @@
 package services
 
 import constant.ApplicationConstant
-import constant.ApplicationConstant._
 import models._
-import readers.InputReader
-import rules.ActionRuleHolder._
-import writers.OutputWriters
+import models.actions.StrikeActions
+import writers.OutputWriter
 
 import scala.annotation.tailrec
 
-class Carrom(reader: InputReader[List[String]], gameStatusFetcher: GameStatusFetcher, outputWriters: OutputWriters) {
+class Carrom(gameStatusFetcher: GameStatusFetcher, outputWriters: OutputWriter) {
 
-  def play(players: List[Player]) {
-    val actionInputs = readInputOption(ApplicationConstant.INPUT_FILE)
+  def play(players: List[Player], actionInputs: List[StrikeActions]) {
     val board = CarromBoard()
     val gameStatus = if (actionInputs.nonEmpty) {
       val (updatedPlayer, carromBoard) = performActions(actionInputs, players, board)
@@ -24,13 +21,21 @@ class Carrom(reader: InputReader[List[String]], gameStatusFetcher: GameStatusFet
   }
 
   @tailrec
-  private def performActions(inputs: List[String], players: List[Player], carromBoard: CarromBoard): (List[Player], CarromBoard) = {
-    if (gameStatusFetcher.isGameOver(carromBoard) || inputs.isEmpty) {
+  private def performActions(actions: List[StrikeActions], players: List[Player], carromBoard: CarromBoard): (List[Player], CarromBoard) = {
+    if (gameStatusFetcher.isGameOver(carromBoard)) {
       (players, carromBoard)
     } else {
-      val (updatedPlayerOnTurn, updatedCarromBoard) = actions(inputs.head, findPlayerOnTurn(players), carromBoard)
-      val updatedPlayers = updatesPlayers(players, updatedPlayerOnTurn)
-      performActions(inputs.tail, updatedPlayers, updatedCarromBoard)
+      val (updatedPlayers, updatedCarromBoard) = perform(actions, players, carromBoard)
+      performActions(actions.tail, updatedPlayers, updatedCarromBoard)
+    }
+  }
+
+  private def perform(actions: List[StrikeActions], players: List[Player], carromBoard: CarromBoard) = {
+    actions match {
+      case Nil => (players, carromBoard)
+      case nextAction :: _ =>
+        val (updatedPlayerOnTurn, updatedCarromBoard) = nextAction.perform(findPlayerOnTurn(players), carromBoard)
+        (updatesPlayers(players, updatedPlayerOnTurn), updatedCarromBoard)
     }
   }
 
@@ -39,24 +44,9 @@ class Carrom(reader: InputReader[List[String]], gameStatusFetcher: GameStatusFet
     (updatedPlayerOnTurn :: playersExcludingOnTurnPlayer).map(_.updateStatus)
   }
 
-  private def actions(choice: String, playerOnTurn: Player, carromBoard: CarromBoard): (Player, CarromBoard) = {
-    choice.trim.toLowerCase match {
-      case STRIKE => rulesForStrike(playerOnTurn, carromBoard)
-      case MULTI_STRIKE => rulesForMultiStrike(playerOnTurn, carromBoard)
-      case RED_STRIKE => rulesForRedStrike(playerOnTurn, carromBoard)
-      case STRIKER_STRIKE => rulesForStrikersStrike(playerOnTurn, carromBoard)
-      case DEFUNCT_COIN => rulesForDefunctCoin(playerOnTurn, carromBoard)
-      case _ => (playerOnTurn, carromBoard)
-    }
-  }
-
   private def findPlayerOnTurn(players: List[Player]): Player = {
     val playerOnTurns = players.filterNot(_.isMyTurn())
     playerOnTurns.headOption.getOrElse(players.head.updateStatus)
-  }
-
-  private def readInputOption(path: String): List[String] = {
-    reader.read(path).getOrElse(List.empty[String])
   }
 
 }

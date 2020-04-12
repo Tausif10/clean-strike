@@ -1,21 +1,23 @@
 package readers
 
-import java.io.FileNotFoundException
-
-import org.specs2.matcher.Matchers
+import models.actions.{MultiStrike, StrikeActions}
+import org.specs2.mock.Mockito
 import org.specs2.mutable.Specification
 import org.specs2.specification.Scope
+import transformers.StrikerActionBuilder
 
-import scala.util.Success
+import scala.util.{Success, Try}
 
-class ActionFileInputReaderSpec extends Specification {
+class ActionFileInputReaderSpec extends Specification with Mockito {
 
   "Action file Reader" should {
 
     "read player's input file from given path" in new Fixture {
       private val expectedPlayersInput = List("Strike", "Multi Strike")
+      val expectedActions: Try[List[StrikeActions]] = Success(List(mock[StrikeActions], mock[MultiStrike]))
+      mockStrikersActionBuilder.build(expectedPlayersInput) returns expectedActions
       val playersInput = actionFileInputReader.read("src/test/scala/resources/testActionInputFile")
-      playersInput mustEqual Success(expectedPlayersInput)
+      playersInput mustEqual expectedActions
     }
 
     "return failure file doesn't exist" in new Fixture {
@@ -25,7 +27,8 @@ class ActionFileInputReaderSpec extends Specification {
   }
 
   trait Fixture extends Scope {
-    val actionFileInputReader = new ActionFileInputReader()
+    val mockStrikersActionBuilder = mock[StrikerActionBuilder]
+    val actionFileInputReader = new ActionFileInputReader(mockStrikersActionBuilder)
   }
 
 }

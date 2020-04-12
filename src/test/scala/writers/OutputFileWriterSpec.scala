@@ -10,13 +10,13 @@ class OutputFileWriterSpec extends Specification {
     "write output to file" in {
       val players = List(Player("Player1"), Player("Player2"))
       val gameStatus = GameStatus(players, "Draw", CarromBoard())
-      val outputFileWriter = new OutputFileWriter()
+      val pathToFile = "src/test/scala/resources/testOutputFile"
+      val outputFileWriter = new OutputFileWriter(pathToFile)
       val expectedOutput = s"""players:\n\t${players.mkString("\n\t")}
                               |carrom board: ${gameStatus.carromBoard}
                               |Game Status: ${gameStatus.status}
                               |""".stripMargin
-      val pathToFile = "src/test/scala/resources/testOutputFile"
-      outputFileWriter.write(gameStatus, pathToFile)
+      outputFileWriter.write(gameStatus)
       val outputFile = scala.io.Source.fromFile(pathToFile).getLines().toList
       outputFile.mkString must beEqualTo(expectedOutput).ignoreSpace
     }

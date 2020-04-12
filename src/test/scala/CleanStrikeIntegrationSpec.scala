@@ -1,9 +1,9 @@
-import models.{CarromBoard, Player}
+import constant.ApplicationConstant
 import org.specs2.mock.Mockito
 import org.specs2.mutable.Specification
 import readers.{ActionFileInputReader, PlayerFileInputReader}
 import services.{Carrom, GameStatusFetcher}
-import transformers.PlayerBuilder
+import transformers.{PlayerBuilder, StrikerActionBuilder}
 import writers.OutputFileWriter
 
 class CleanStrikeIntegrationSpec extends Specification with Mockito {
@@ -12,12 +12,13 @@ class CleanStrikeIntegrationSpec extends Specification with Mockito {
 
     "start the game" in {
       val playerBuilder = new PlayerBuilder()
-      val inputReader = new ActionFileInputReader()
+      val strikersActionBuilder = new StrikerActionBuilder()
+      val inputReader = new ActionFileInputReader(strikersActionBuilder)
       val gameStatusFetcher = new GameStatusFetcher()
-      val outputWriters = new OutputFileWriter()
-      val carrom = new Carrom(inputReader, gameStatusFetcher, outputWriters)
+      val outputWriters = new OutputFileWriter(ApplicationConstant.OUTPUT_FILE)
+      val carrom = new Carrom(gameStatusFetcher, outputWriters)
       val playerFileReader = new PlayerFileInputReader(playerBuilder)
-      val cleanStrike = new CleanStrike(playerFileReader, carrom)
+      val cleanStrike = new CleanStrike(playerFileReader, inputReader, carrom)
       cleanStrike.start()
       true
     }

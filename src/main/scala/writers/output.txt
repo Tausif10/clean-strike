@@ -1,5 +1,0 @@
-players:
-	Player(John,1,0,0,Wait)
-	Player(Smith,0,0,0,Play)
-carrom board: CarromBoard(8,1,Striker())
-Game Status: Draw
