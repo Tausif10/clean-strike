@@ -8,7 +8,10 @@ import scala.util.{Failure, Success, Try}
 class StrikerActionBuilder {
 
   def build(inputs: List[String]): Try[List[StrikeActions]] = {
-    convertToSeq(inputs.map(actions))
+    println("inputes ===== "+inputs)
+    val s = convertToSeq(inputs.map(actions))
+    println("build ====> "+s)
+    s
   }
 
   private def actions(choice: String): Try[StrikeActions] = {

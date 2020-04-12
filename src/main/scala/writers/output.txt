@@ -1,0 +1,5 @@
+players:
+	Player(John,5,0,0,Win)
+	Player(Smith,-4,2,2,Play)
+carrom board: CarromBoard(4,1,Striker())
+Game Status: John won

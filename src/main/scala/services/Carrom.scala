@@ -24,18 +24,12 @@ class Carrom(gameStatusFetcher: GameStatusFetcher, outputWriters: OutputWriter) 
   private def performActions(actions: List[StrikeActions], players: List[Player], carromBoard: CarromBoard): (List[Player], CarromBoard) = {
     if (gameStatusFetcher.isGameOver(carromBoard)) {
       (players, carromBoard)
+    } else if (actions.isEmpty) {
+      (players, carromBoard)
     } else {
-      val (updatedPlayers, updatedCarromBoard) = perform(actions, players, carromBoard)
+      val (updatedPlayerOnTurn, updatedCarromBoard) = actions.head.perform(findPlayerOnTurn(players), carromBoard)
+      val updatedPlayers = updatesPlayers(players, updatedPlayerOnTurn)
       performActions(actions.tail, updatedPlayers, updatedCarromBoard)
-    }
-  }
-
-  private def perform(actions: List[StrikeActions], players: List[Player], carromBoard: CarromBoard) = {
-    actions match {
-      case Nil => (players, carromBoard)
-      case nextAction :: _ =>
-        val (updatedPlayerOnTurn, updatedCarromBoard) = nextAction.perform(findPlayerOnTurn(players), carromBoard)
-        (updatesPlayers(players, updatedPlayerOnTurn), updatedCarromBoard)
     }
   }
 

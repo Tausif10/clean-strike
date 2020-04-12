@@ -4,8 +4,6 @@ import java.io.{File, PrintWriter}
 
 import models.GameStatus
 
-import scala.util.Try
-
 class OutputFileWriter(pathToWrite: String) extends OutputWriter {
   override def write(gameStatus: GameStatus) = {
     val output =
