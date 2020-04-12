@@ -5,7 +5,7 @@ import models.{CarromBoard, Player}
 trait RuleMaker[T] {
   def rulesForStrike(player: Player, carromBoard: CarromBoard): T
 
-  def rulesForMutiStrike(player: Player, carromBoard: CarromBoard): T
+  def rulesForMultiStrike(player: Player, carromBoard: CarromBoard): T
 
   def rulesForRedStrike(player: Player, carromBoard: CarromBoard): T
 

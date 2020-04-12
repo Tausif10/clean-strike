@@ -42,7 +42,7 @@ class Carrom(reader: InputReader[List[String]], gameStatusFetcher: GameStatusFet
   private def actions(choice: String, playerOnTurn: Player, carromBoard: CarromBoard): (Player, CarromBoard) = {
     choice.trim.toLowerCase match {
       case STRIKE => rulesForStrike(playerOnTurn, carromBoard)
-      case MULTI_STRIKE => rulesForMutiStrike(playerOnTurn, carromBoard)
+      case MULTI_STRIKE => rulesForMultiStrike(playerOnTurn, carromBoard)
       case RED_STRIKE => rulesForRedStrike(playerOnTurn, carromBoard)
       case STRIKER_STRIKE => rulesForStrikersStrike(playerOnTurn, carromBoard)
       case DEFUNCT_COIN => rulesForDefunctCoin(playerOnTurn, carromBoard)

@@ -8,7 +8,7 @@ object ActionRuleHolder extends RuleMaker[(Player, CarromBoard)] {
     (player.addPoint.removeSuccessiveFailTurn, carromBoard.pocketBlackCoin())
   }
 
-  def rulesForMutiStrike(player: Player, carromBoard: CarromBoard): (Player, CarromBoard) = {
+  def rulesForMultiStrike(player: Player, carromBoard: CarromBoard): (Player, CarromBoard) = {
     (player.addPoint.addPoint.removeSuccessiveFailTurn, carromBoard.pocketBlackCoin().pocketBlackCoin())
   }
 
