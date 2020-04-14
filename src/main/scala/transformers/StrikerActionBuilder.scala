@@ -7,26 +7,26 @@ import scala.util.{Failure, Success, Try}
 
 class StrikerActionBuilder {
 
-  def build(inputs: List[String]): Try[List[StrikeActions]] = {
+  def build(inputs: List[String]): Try[List[Actions]] = {
     println("inputes ===== "+inputs)
     val s = convertToSeq(inputs.map(actions))
     println("build ====> "+s)
     s
   }
 
-  private def actions(choice: String): Try[StrikeActions] = {
+  private def actions(choice: String): Try[Actions] = {
     choice.trim.toLowerCase match {
       case STRIKE => Success(new Strike())
-      case MULTI_STRIKE => Success(new MultiStrike())
-      case RED_STRIKE => Success(new ReadStrike())
-      case STRIKER_STRIKE => Success(new StrikersStrike())
+      case MULTI_STRIKE => Success(new Multi())
+      case RED_STRIKE => Success(new Read())
+      case STRIKER_STRIKE => Success(new Strikers())
       case DEFUNCT_COIN => Success(new DefunctCoin())
       case _ => Failure(throw new Exception("Invalid Input"))
     }
   }
 
-  private def convertToSeq(strikersAction: List[Try[StrikeActions]],
-                           result: Try[List[StrikeActions]] = Success(List.empty)): Try[List[StrikeActions]] = {
+  private def convertToSeq(strikersAction: List[Try[Actions]],
+                           result: Try[List[Actions]] = Success(List.empty)): Try[List[Actions]] = {
     strikersAction match {
       case Nil => result
       case head :: _ if head.isFailure => Failure(head.failed.get)

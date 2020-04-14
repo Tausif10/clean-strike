@@ -2,7 +2,7 @@ package models.actions
 
 import models.{CarromBoard, Player}
 
-trait StrikeActions {
+trait Actions {
 
   def perform(player: Player, carromBoard: CarromBoard): (Player, CarromBoard)
 }
