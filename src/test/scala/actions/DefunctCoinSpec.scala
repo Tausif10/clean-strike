@@ -1,5 +1,6 @@
-package models.actions
+package actions
 
+import models.actions.DefunctCoin
 import models.{CarromBoard, Player}
 import org.specs2.mutable.Specification
 import org.specs2.specification.Scope

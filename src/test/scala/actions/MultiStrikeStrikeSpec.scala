@@ -1,5 +1,6 @@
-package models.actions
+package actions
 
+import models.actions.Multi
 import models.{CarromBoard, Player}
 import org.specs2.matcher.Scope
 import org.specs2.mutable.Specification
