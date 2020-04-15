@@ -3,7 +3,7 @@ package readers
 import models.Player
 import org.specs2.mock.Mockito
 import org.specs2.mutable.Specification
-import transformers.PlayerBuilder
+import builders.PlayerBuilder
 
 import scala.util.Success
 

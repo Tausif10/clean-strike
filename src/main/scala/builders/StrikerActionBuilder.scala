@@ -1,4 +1,4 @@
-package transformers
+package builders
 
 import constant.ApplicationConstant._
 import models.actions._
@@ -8,10 +8,7 @@ import scala.util.{Failure, Success, Try}
 class StrikerActionBuilder {
 
   def build(inputs: List[String]): Try[List[Actions]] = {
-    println("inputes ===== "+inputs)
-    val s = convertToSeq(inputs.map(actions))
-    println("build ====> "+s)
-    s
+    convertToSeq(inputs.map(actions))
   }
 
   private def actions(choice: String): Try[Actions] = {

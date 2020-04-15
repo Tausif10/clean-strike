@@ -34,7 +34,7 @@ case class Player(name: String, point: Int = 0,
   def losePoint: Player = this.copy(point = point - 1)
 
 
-  def clearSuccessiveFailTurnCOunt = this.copy(successiveFailTurn = 0)
+    def clearSuccessiveFailTurnCOunt = this.copy(successiveFailTurn = 0)
 
   def addSuccessiveFailTurnCount: Player = {
     val updatedPlayer = this.copy(successiveFailTurn = successiveFailTurn + 1)

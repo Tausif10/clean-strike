@@ -3,7 +3,7 @@ import org.specs2.mock.Mockito
 import org.specs2.mutable.Specification
 import readers.{ActionFileInputReader, PlayerFileInputReader}
 import services.{Carrom, GameStatusFetcher}
-import transformers.{PlayerBuilder, StrikerActionBuilder}
+import builders.{PlayerBuilder, StrikerActionBuilder}
 import writers.OutputFileWriter
 
 class CleanStrikeIntegrationSpec extends Specification with Mockito {

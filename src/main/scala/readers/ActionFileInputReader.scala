@@ -1,7 +1,7 @@
 package readers
 
 import models.actions.Actions
-import transformers.StrikerActionBuilder
+import builders.StrikerActionBuilder
 
 import scala.util.Try
 

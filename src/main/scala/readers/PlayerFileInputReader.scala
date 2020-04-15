@@ -1,7 +1,7 @@
 package readers
 
 import models.Player
-import transformers.PlayerBuilder
+import builders.PlayerBuilder
 
 import scala.util.Try
 

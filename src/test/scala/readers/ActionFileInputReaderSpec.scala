@@ -4,7 +4,7 @@ import models.actions.{Multi, Actions}
 import org.specs2.mock.Mockito
 import org.specs2.mutable.Specification
 import org.specs2.specification.Scope
-import transformers.StrikerActionBuilder
+import builders.StrikerActionBuilder
 
 import scala.util.{Success, Try}
 
