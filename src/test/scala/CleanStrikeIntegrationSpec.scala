@@ -19,8 +19,8 @@ class CleanStrikeIntegrationSpec extends Specification with Mockito {
       val carrom = new Carrom(gameStatusFetcher, outputWriters)
       val playerFileReader = new PlayerFileInputReader(playerBuilder)
       val cleanStrike = new CleanStrike(playerFileReader, inputReader, carrom)
-      cleanStrike.start()
-      true
+      val res = cleanStrike.start()
+      res must beSuccessfulTry
     }
   }
 }
