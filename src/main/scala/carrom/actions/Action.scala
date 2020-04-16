@@ -1,4 +1,4 @@
-package models.actions
+package carrom.actions
 
 import models.{CarromBoard, Player}
 

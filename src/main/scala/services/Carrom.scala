@@ -1,8 +1,8 @@
 package services
 
+import carrom.actions.Actions
 import constant.ApplicationConstant
 import models._
-import models.actions.Actions
 import writers.OutputWriter
 
 import scala.annotation.tailrec

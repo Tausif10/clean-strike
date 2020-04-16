@@ -1,7 +1,7 @@
 package readers
 
-import models.actions.Actions
 import builders.StrikerActionBuilder
+import carrom.actions.Actions
 
 import scala.util.Try
 

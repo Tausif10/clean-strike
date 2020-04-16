@@ -1,6 +1,5 @@
-package actions
+package carrom.actions
 
-import models.actions.Strike
 import models.{CarromBoard, Player}
 import org.specs2.mutable.Specification
 import org.specs2.specification.Scope
@@ -29,6 +28,6 @@ class StrikeSpec extends Specification {
   trait Fixture extends Scope {
     val player = Player("test")
     val carromBoard = CarromBoard()
-    val strike = new Strike()
+    val strike = Strike
   }
 }

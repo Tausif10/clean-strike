@@ -1,8 +1,8 @@
-package models.actions
+package carrom.actions
 
 import models.{CarromBoard, Player}
 
-class MultiStrike extends Actions {
+object MultiStrike extends Actions {
 
   override def perform(player: Player, carromBoard: CarromBoard): (Player, CarromBoard) = {
     (player.addPoint.addPoint.removeSuccessiveFailTurn, carromBoard.pocketBlackCoin().pocketBlackCoin())

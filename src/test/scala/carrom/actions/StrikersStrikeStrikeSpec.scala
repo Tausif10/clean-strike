@@ -1,11 +1,10 @@
-package actions
+package carrom.actions
 
-import models.actions.Strikers
 import models.{CarromBoard, Player}
 import org.specs2.matcher.Scope
 import org.specs2.mutable.Specification
 
-class StrikersStrikeSpec extends Specification {
+class StrikersStrikeStrikeSpec extends Specification {
 
   "Strikers strike" should {
 
@@ -28,6 +27,6 @@ class StrikersStrikeSpec extends Specification {
   trait Fixture extends Scope {
     val player = Player("test")
     val carromBoard = CarromBoard()
-    val strikersStrike = new Strikers()
+    val strikersStrike = StrikersStrike
   }
 }

@@ -1,6 +1,5 @@
-package actions
+package carrom.actions
 
-import models.actions.MultiStrike
 import models.{CarromBoard, Player}
 import org.specs2.matcher.Scope
 import org.specs2.mutable.Specification
@@ -29,6 +28,6 @@ class MultiStrikeStrikeSpec extends Specification {
   trait Fixture extends Scope {
     val player = Player("test")
     val carromBoard = CarromBoard()
-    val multiStrike = new MultiStrike()
+    val multiStrike = MultiStrike
   }
 }

@@ -1,6 +1,5 @@
-package actions
+package carrom.actions
 
-import models.actions.DefunctCoin
 import models.{CarromBoard, Player}
 import org.specs2.mutable.Specification
 import org.specs2.specification.Scope
@@ -41,6 +40,6 @@ class DefunctCoinSpec extends Specification {
   trait Fixture extends Scope {
     val player = Player("test")
     val carromBoard = CarromBoard()
-    val defunctCoinAction = new DefunctCoin()
+    val defunctCoinAction = DefunctCoin
   }
 }

@@ -1,7 +1,7 @@
 package builders
 
+import carrom.actions._
 import constant.ApplicationConstant._
-import models.actions._
 
 import scala.util.{Failure, Success, Try}
 
@@ -13,12 +13,12 @@ class StrikerActionBuilder {
 
   private def actions(choice: String): Try[Actions] = {
     choice.trim.toLowerCase match {
-      case STRIKE => Success(new Strike())
-      case MULTI_STRIKE => Success(new MultiStrike())
-      case RED_STRIKE => Success(new RedStrike())
-      case STRIKER_STRIKE => Success(new Strikers())
-      case DEFUNCT_COIN => Success(new DefunctCoin())
-      case _ => Failure(throw new Exception("Invalid Input"))
+      case STRIKE => Success(Strike)
+      case MULTI_STRIKE => Success(MultiStrike)
+      case RED_STRIKE => Success(RedStrike)
+      case STRIKER_STRIKE => Success(StrikersStrike)
+      case DEFUNCT_COIN => Success(DefunctCoin)
+      case _ => Failure(new Exception("Invalid Input"))
     }
   }
 

@@ -1,10 +1,10 @@
-package models.actions
+package carrom.actions
 
 import models.{CarromBoard, Player}
 
-class Strikers extends Actions {
+object Strike extends Actions {
 
   override def perform(player: Player, carromBoard: CarromBoard): (Player, CarromBoard) = {
-    (player.addFoul.losePoint.addSuccessiveFailTurnCount, carromBoard)
+    (player.addPoint.removeSuccessiveFailTurn, carromBoard.pocketBlackCoin())
   }
 }

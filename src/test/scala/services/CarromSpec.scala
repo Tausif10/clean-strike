@@ -1,7 +1,7 @@
 package services
 
+import carrom.actions.Strike
 import constant.ApplicationConstant
-import models.actions.Strike
 import models.{CarromBoard, GameStatus, Player, PlayingState}
 import org.specs2.mock.Mockito
 import org.specs2.mutable.Specification
@@ -15,39 +15,34 @@ class CarromSpec extends Specification with Mockito {
     "game is started by player1 and perform action" in new Fixture {
       val updatedBoard: CarromBoard = carromBoard.copy(blackCoin = 8)
       val updatedPlayers = List(Player("Player1", 1, 0, 0, PlayingState.Wait), Player("Player2", 0, 0, 0, PlayingState.Play))
-      val choices = List(mockStrike)
+      val choices = List(Strike)
 
-      mockStrike.perform(players.head.copy(playStatus = PlayingState.Play), carromBoard) returns ((updatedPlayers.head.copy(playStatus = PlayingState.Play), updatedBoard))
       mockGameStatusFetcher.isGameOver(carromBoard) returns false
       mockGameStatusFetcher.isGameOver(updatedBoard.copy(blackCoin = 8)) returns true
       mockGameStatusFetcher.getStatus(updatedPlayers, updatedBoard) returns GameStatus(updatedPlayers, "Draw", carromBoard)
       game.play(players, choices)
 
       there was one(mockGameStatusFetcher).getStatus(updatedPlayers, updatedBoard)
-      there was one(mockStrike).perform(players.head.copy(playStatus = PlayingState.Play), carromBoard)
     }
 
     "write game status to file" in new Fixture {
       val updatedBoard: CarromBoard = carromBoard.copy(blackCoin = 8)
       val updatedPlayers = List(Player("Player1", 1, 0, 0, PlayingState.Wait), Player("Player2", 0, 0, 0, PlayingState.Play))
       val gameStatus: GameStatus = GameStatus(updatedPlayers, "Draw", carromBoard)
-      val choices = List(mockStrike)
+      val choices = List(Strike)
 
-      mockStrike.perform(players.head.copy(playStatus = PlayingState.Play), carromBoard) returns ((updatedPlayers.head.copy(playStatus = PlayingState.Play), updatedBoard))
       mockGameStatusFetcher.isGameOver(carromBoard) returns false
       mockGameStatusFetcher.isGameOver(updatedBoard.copy(blackCoin = 8)) returns true
       mockGameStatusFetcher.getStatus(updatedPlayers, updatedBoard) returns gameStatus
       game.play(players, choices)
 
       there was one(mockGameStatusFetcher).getStatus(updatedPlayers, updatedBoard)
-      there was one(mockStrike).perform(players.head.copy(playStatus = PlayingState.Play), carromBoard)
       there was one(mockOutputWriters).write(gameStatus)
     }
 
   }
 
   trait Fixture extends Scope {
-    val mockStrike = mock[Strike]
     val mockOutputWriters = mock[OutputWriter]
     val mockGameStatusFetcher = mock[GameStatusFetcher]
     val player1 = Player("Player1")
