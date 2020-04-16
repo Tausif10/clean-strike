@@ -8,7 +8,7 @@ import writers.OutputFileWriter
 
 class CleanStrikeIntegrationSpec extends Specification with Mockito {
 
-  "Game" should {
+  "Clean strike" should {
 
     "start the game" in {
       val playerBuilder = new PlayerBuilder()
