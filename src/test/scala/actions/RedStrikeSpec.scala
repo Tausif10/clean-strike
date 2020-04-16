@@ -1,6 +1,6 @@
 package actions
 
-import models.actions.Read
+import models.actions.RedStrike
 import models.{CarromBoard, Player}
 import org.specs2.matcher.Scope
 import org.specs2.mutable.Specification
@@ -29,6 +29,6 @@ class RedStrikeSpec extends Specification {
   trait Fixture extends Scope {
     val player = Player("test")
     val carromBoard = CarromBoard()
-    val readStrike = new Read()
+    val readStrike = new RedStrike()
   }
 }

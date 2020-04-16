@@ -1,11 +1,11 @@
 package actions
 
-import models.actions.Multi
+import models.actions.MultiStrike
 import models.{CarromBoard, Player}
 import org.specs2.matcher.Scope
 import org.specs2.mutable.Specification
 
-class MultiStrikeSpec extends Specification {
+class MultiStrikeStrikeSpec extends Specification {
 
   "Multi Strike Action" should {
 
@@ -29,6 +29,6 @@ class MultiStrikeSpec extends Specification {
   trait Fixture extends Scope {
     val player = Player("test")
     val carromBoard = CarromBoard()
-    val multiStrike = new Multi()
+    val multiStrike = new MultiStrike()
   }
 }

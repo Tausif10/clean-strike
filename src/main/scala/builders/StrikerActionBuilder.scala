@@ -14,8 +14,8 @@ class StrikerActionBuilder {
   private def actions(choice: String): Try[Actions] = {
     choice.trim.toLowerCase match {
       case STRIKE => Success(new Strike())
-      case MULTI_STRIKE => Success(new Multi())
-      case RED_STRIKE => Success(new Read())
+      case MULTI_STRIKE => Success(new MultiStrike())
+      case RED_STRIKE => Success(new RedStrike())
       case STRIKER_STRIKE => Success(new Strikers())
       case DEFUNCT_COIN => Success(new DefunctCoin())
       case _ => Failure(throw new Exception("Invalid Input"))
